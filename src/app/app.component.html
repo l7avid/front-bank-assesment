@@ -1,5 +1,6 @@
 <div class="app-container">
   <h1 class="app-title">Banco</h1>
+  <router-outlet></router-outlet>
   <app-search (searchChange)="onSearch($event)" class="app-search"></app-search>
   <app-product-list [filteredProducts]="filteredProducts" [products]="products" [selectedQuantity]="selectedQuantity" class="app-product-list"></app-product-list>
 </div>

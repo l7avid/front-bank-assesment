@@ -2,11 +2,10 @@ import {
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
-import { ProductService } from 'src/app/services/product-service/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -17,7 +16,10 @@ export class ProductListComponent implements OnChanges {
   @Input() filteredProducts?: Product[];
   @Input() products!: Product[];
   @Input() selectedQuantity!: number;
+
   displayedProducts: Product[] = [];
+
+  constructor(private router: Router) {}
 
   get productList(): Product[] {
     return this.filteredProducts && this.filteredProducts.length > 0
@@ -45,5 +47,9 @@ export class ProductListComponent implements OnChanges {
           0,
           this.selectedQuantity
         ));
+  }
+
+  navigateToForm(): void {
+    this.router.navigate(['/form']);
   }
 }

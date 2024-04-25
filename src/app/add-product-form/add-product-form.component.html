@@ -1,0 +1,38 @@
+<div class="overlay">
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #productForm="ngForm">
+      <div>
+        <label for="id">Id:</label>
+        <input type=string id="id" name="id" formControlName="id">
+        <div
+          *ngIf="form.controls['id'].invalid && (form.controls['id'].dirty || form.controls['id'].touched)">
+          <div *ngIf="form.controls['id'].errors!['required']">Id requerido</div>
+          <div *ngIf="form.controls['id'].errors!['minlength']">El Id debe tener mínimo 3 caracteres</div>
+          <div *ngIf="form.controls['id'].errors!['maxlength']">El Id no puede exceder 10 characters</div>
+        </div>
+        <label for="logo">Logo:</label>
+        <input type=string id="logo" name="logo" formControlName="logo">
+        <div *ngIf="form.controls['logo'].errors!['required']">Logo requerido</div>
+        <label for="name">Nombre:</label>
+        <input type=string id="id" name="name" formControlName="name">
+        <div *ngIf="form.controls['name'].errors!['required']">Nombre requerido</div>
+        <label for="description">Descripción:</label>
+        <input type=string id="description" name="description" formControlName="description">
+          <div *ngIf="form.controls['name'].errors!['required']">Descripción requerida</div>
+          <div *ngIf="form.controls['name'].errors!['minlength']">Descripción menor a 10 caracteres</div>
+          <div *ngIf="form.controls['name'].errors!['requmaxlengthired']">Descripción mayor a 200 caracteress</div>
+        <label for="releaseDate">Fecha de liberación:</label>
+        <input type=string id="releaseDate" name="releaseDate" formControlName="releaseDate">
+        <label for="restructureDate">Fecha de restructuración:</label>
+        <input type=string id="restructureDate" name="restructureDate" readonly formControlName="restructureDate"
+          required minlength="3" maxlength="10" appformat>
+        <div *ngIf="form.get('restructureDate')!.errors!['invalidformat']">Date must be in the format dd-mm-yyyy</div>
+        <div *ngIf="form.get('restructureDate')!.errors!['required']">Date is required</div>
+      </div>
+      <!-- Add similar validation for other fields -->
+      <div>
+        <button type="submit" [disabled]="productForm.invalid">Agregar producto</button>
+      </div>
+    </form>
+  </div>
+</div>

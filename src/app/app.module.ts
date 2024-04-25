@@ -7,19 +7,26 @@ import { DateDdMmYyyyPipe } from './pipes/date-dd-mm-yyyy.pipe';
 import { DatePipe } from '@angular/common';
 import { SearchComponent } from './search/search/search.component';
 import { ProductResultSelectComponent } from './products/product-result-select/product-result-select.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddButtonComponent } from './shared/components/add-button/add-button.component';
+import { AddProductFormComponent } from './add-product-form/add-product-form.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
     DateDdMmYyyyPipe,
-    ProductResultSelectComponent
+    ProductResultSelectComponent,
+    AddButtonComponent,
+    AddProductFormComponent
   ],
   imports: [
     BrowserModule,
     SearchComponent,
-    FormsModule
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     DatePipe
