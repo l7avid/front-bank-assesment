@@ -32,7 +32,7 @@ export class AddProductFormComponent implements OnInit {
       filter((value: string) => value.length === 10) // Filter out values with length not equal to 10
     ).subscribe(newReleaseDate => {
       const newRestructureDate = generateDateOneYearFurther(new Date(newReleaseDate));
-      const finalRestructureDate = this.datePipe.transform(newRestructureDate, 'mm-dd-yyyy');
+      const finalRestructureDate = this.datePipe.transform(newRestructureDate, 'MM-dd-yyyy');
       this.form.get('restructureDate')!.setValue(finalRestructureDate);
     });
   }

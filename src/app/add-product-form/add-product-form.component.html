@@ -1,44 +1,70 @@
 <div class="overlay">
   <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #productForm="ngForm">
-      <div>
-        <label for="id">Id:</label>
-        <input type=string id="id" name="id" formControlName="id">
-        <div *ngIf="form.controls['id'].invalid && (form.controls['id'].dirty || form.controls['id'].touched)">
-          <div *ngIf="form.controls['id'].errors!['required']">Id requerido</div>
-          <div *ngIf="form.controls['id'].errors!['minlength']">min. 3 caracteres</div>
-          <div *ngIf="form.controls['id'].errors!['maxlength']">max. 10 caracteres</div>
+      <div class="grid-container">
+        <div>
+          <label for="id">Id:</label>
+          <input type=string id="id" name="id" formControlName="id">
+          <div *ngIf="form.controls['id'].invalid && (form.controls['id'].dirty || form.controls['id'].touched)"
+            class="error-container">
+            <div *ngIf="form.controls['id'].errors!['required']" class="error-message">Id requerido</div>
+            <div *ngIf="form.controls['id'].errors!['minlength']" class="error-message">min. 3 caracteres</div>
+            <div *ngIf="form.controls['id'].errors!['maxlength']" class="error-message">max. 10 caracteres</div>
+          </div>
         </div>
-        <label for="logo">Logo:</label>
-        <input type=string id="logo" name="logo" formControlName="logo">
-        <div *ngIf="form.controls['logo'].invalid && (form.controls['logo'].dirty || form.controls['logo'].touched)">
-          <div *ngIf="form.controls['logo'].errors!['required']">Logo requerido</div>
+        <div>
+          <label for="name">Nombre:</label>
+          <input type=string id="id" name="name" formControlName="name">
+          <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)"
+            class="error-container">
+            <div *ngIf="form.controls['name'].errors!['required']" class="error-message">Nombre requerido</div>
+            <div *ngIf="form.controls['name'].errors!['minlength']" class="error-message">min. 5 caracteres</div>
+            <div *ngIf="form.controls['name'].errors!['maxlength']" class="error-message">max. 100 caracteres</div>
+          </div>
         </div>
-        <label for="name">Nombre:</label>
-        <input type=string id="id" name="name" formControlName="name">
-        <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
-          <div *ngIf="form.controls['name'].errors!['required']">Nombre requerido</div>
-          <div *ngIf="form.controls['name'].errors!['minlength']">min. 5 caracteres</div>
-          <div *ngIf="form.controls['name'].errors!['maxlength']">max. 100 caracteres</div>
+        <div>
+          <label for="description">Descripción:</label>
+          <input type=string id="description" name="description" formControlName="description">
+          <div
+            *ngIf="form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)"
+            class="error-container">
+            <div *ngIf="form.controls['description'].errors!['required']" class="error-message">Descripción requerida
+            </div>
+            <div *ngIf="form.controls['description'].errors!['minlength']" class="error-message">min. 10 caracteres
+            </div>
+            <div *ngIf="form.controls['description'].errors!['maxlength']" class="error-message">max. 200 caracteress
+            </div>
+          </div>
         </div>
-        <label for="description">Descripción:</label>
-        <input type=string id="description" name="description" formControlName="description">
-        <div *ngIf="form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)">
-          <div *ngIf="form.controls['description'].errors!['required']">Descripción requerida</div>
-          <div *ngIf="form.controls['description'].errors!['minlength']">min. 10 caracteres</div>
-          <div *ngIf="form.controls['description'].errors!['maxlength']">max. 200 caracteress</div>
+        <div>
+          <label for="logo">Logo:</label>
+          <input type=string id="logo" name="logo" formControlName="logo">
+          <div *ngIf="form.controls['logo'].invalid && (form.controls['logo'].dirty || form.controls['logo'].touched)"
+            class="error-container">
+            <div *ngIf="form.controls['logo'].errors!['required']" class="error-message">Logo requerido</div>
+          </div>
         </div>
-        <label for="releaseDate">Fecha de liberación:</label>
-        <input type=text id="releaseDate" name="releaseDate" formControlName="releaseDate" maxlength="10" minlength="10" dateFormat="^\d{2}-\d{2}-\d{4}$">
-        <div *ngIf="form.controls['releaseDate'].invalid && (form.controls['releaseDate'].dirty || form.controls['releaseDate'].touched)">
-          <div *ngIf="form.get('releaseDate')!.errors!['invalidDateFormat']">mm-dd-yyyy</div>
-          <div *ngIf="form.get('releaseDate')!.errors!['required']">Fecha requerida</div>
+        <div>
+          <label for="releaseDate">Fecha de liberación:</label>
+          <input type=text id="releaseDate" name="releaseDate" formControlName="releaseDate" maxlength="10"
+            minlength="10" dateFormat="^\d{2}-\d{2}-\d{4}$">
+          <div
+            *ngIf="form.controls['releaseDate'].invalid && (form.controls['releaseDate'].dirty || form.controls['releaseDate'].touched)"
+            class="error-container">
+            <div *ngIf="form.get('releaseDate')!.errors!['invalidDateFormat']" class="error-message">MM-dd-yyyy</div>
+            <div *ngIf="form.get('releaseDate')!.errors!['required']" class="error-message">Fecha requerida</div>
+          </div>
         </div>
-        <label for="restructureDate">Fecha de restructuración:</label>
-        <input type=string id="restructureDate" name="restructureDate" readonly formControlName="restructureDate">
-      </div>
-      <div>
-        <button type="submit" [disabled]="productForm.invalid">Agregar producto</button>
+        <div>
+          <label for="restructureDate">Fecha de restructuración:</label>
+          <input type=string id="restructureDate" name="restructureDate" readonly formControlName="restructureDate">
+        </div>
+        <div>
+          <button type="submit" [disabled]="productForm.invalid">Agregar producto</button>
+        </div>
+        <div>
+          <button type="submit" [disabled]="productForm.invalid">Reiniciar formulario</button>
+        </div>
       </div>
     </form>
   </div>

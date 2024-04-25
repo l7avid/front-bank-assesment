@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'datePipe'
 })
-export class myDatePipe implements PipeTransform {
+export class MyDatePipe implements PipeTransform {
 
   constructor(private datePipe: DatePipe) {}
 
