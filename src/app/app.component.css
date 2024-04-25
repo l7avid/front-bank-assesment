@@ -1,0 +1,15 @@
+.app-container {
+  width: fit-content;
+  margin: auto;
+}
+
+.app-container .app-search {
+  margin: 10rem;
+}
+
+.app-title {
+  font-family: 'Roboto', sans-serif;
+  margin: 5rem 0rem;
+  text-align: center;
+}
+
