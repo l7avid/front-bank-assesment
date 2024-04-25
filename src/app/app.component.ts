@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
 
   title = 'tech-challenge';
   products: Product[] = [];
-  selectedQuantity: number = 10;
+  selectedQuantity: number = 5;
 
   constructor(private productService: ProductService) {}
 
