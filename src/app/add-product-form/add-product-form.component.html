@@ -18,8 +18,8 @@
         <input type=string id="id" name="name" formControlName="name">
         <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
           <div *ngIf="form.controls['name'].errors!['required']">Nombre requerido</div>
-          <div *ngIf="form.controls['name'].errors!['minlength']">min. 3 caracteres</div>
-          <div *ngIf="form.controls['name'].errors!['maxlength']">max. 10 caracteres</div>
+          <div *ngIf="form.controls['name'].errors!['minlength']">min. 5 caracteres</div>
+          <div *ngIf="form.controls['name'].errors!['maxlength']">max. 100 caracteres</div>
         </div>
         <label for="description">Descripción:</label>
         <input type=string id="description" name="description" formControlName="description">
@@ -31,7 +31,7 @@
         <label for="releaseDate">Fecha de liberación:</label>
         <input type=text id="releaseDate" name="releaseDate" formControlName="releaseDate" maxlength="10" minlength="10" dateFormat="^\d{2}-\d{2}-\d{4}$">
         <div *ngIf="form.controls['releaseDate'].invalid && (form.controls['releaseDate'].dirty || form.controls['releaseDate'].touched)">
-          <div *ngIf="form.get('releaseDate')!.errors!['invalidDateFormat']">dd-mm-yyyy</div>
+          <div *ngIf="form.get('releaseDate')!.errors!['invalidDateFormat']">mm-dd-yyyy</div>
           <div *ngIf="form.get('releaseDate')!.errors!['required']">Fecha requerida</div>
         </div>
         <label for="restructureDate">Fecha de restructuración:</label>

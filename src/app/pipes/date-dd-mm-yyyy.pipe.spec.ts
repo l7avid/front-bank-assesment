@@ -1,4 +1,4 @@
-import { DateDdMmYyyyPipe } from './date-dd-mm-yyyy.pipe';
+import { DateDdMmYyyyPipe } from './myDate.pipe';
 
 describe('DateDdMmYyyyPipe', () => {
   it('create an instance', () => {

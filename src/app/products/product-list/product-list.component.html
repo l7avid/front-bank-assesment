@@ -15,8 +15,8 @@
           <td class="products-table-cell"><img class="products-table-logo" [src]="product.logo" alt="Product logo"></td>
           <td class="products-table-cell">{{product.name}}</td>
           <td class="products-table-cell">{{product.description}}</td>
-          <td class="products-table-cell">{{product.releaseDate | date:'dd-MM-yyyy'}}</td>
-          <td class="products-table-cell">{{product.restructureDate | dateDdMmYyyy}}</td>
+          <td class="products-table-cell">{{product.releaseDate | date:'MM-dd-yyyy'}}</td>
+          <td class="products-table-cell">{{product.restructureDate | datePipe }}</td>
         </tr>
       </tbody>
     </table>
