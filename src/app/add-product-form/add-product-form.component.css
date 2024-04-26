@@ -64,11 +64,15 @@
 .add-product-button {
   margin-top: 1rem;
   align-self: flex-end;
-  width: 40%;
+  width:  fit-content;
 }
 
 .restart-form-button {
   margin-top: 1rem;
   align-self: flex-start;
-  width: 40%;
+  width:  fit-content;
+}
+
+input {
+  height: 1.3rem;
 }
