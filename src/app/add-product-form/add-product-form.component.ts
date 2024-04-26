@@ -44,4 +44,10 @@ export class AddProductFormComponent implements OnInit {
       console.log('Invalid date format');
     }
   }
+
+  onTabPressed(event: Event) {
+    if ((event as KeyboardEvent).key === 'Tab') {
+      event.preventDefault();
+    }
+  }
 }

@@ -1,4 +1,6 @@
 .overlay {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
   position: fixed;
   top: 0;
   left: 0;
@@ -23,7 +25,12 @@
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
-  gap: 10px;
+  gap: 1rem;
+
+  label {
+    font-size: smaller;
+  }
+
 }
 
 .left-column {
@@ -38,7 +45,7 @@
 
 .error-message {
   color: red;
-  font-size: 14px;
+  font-size: x-small;
 }
 
 .invalid-input {
@@ -48,4 +55,20 @@
 .grid-container > div {
   display: flex;
   flex-direction: column;
+}
+
+.form-title {
+  text-align: center;
+}
+
+.add-product-button {
+  margin-top: 1rem;
+  align-self: flex-end;
+  width: 40%;
+}
+
+.restart-form-button {
+  margin-top: 1rem;
+  align-self: flex-start;
+  width: 40%;
 }

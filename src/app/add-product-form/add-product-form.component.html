@@ -1,20 +1,22 @@
 <div class="overlay">
   <div class="form-container">
+    <h2 class="form-title">Formulario de Registro</h2>
+    <hr>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #productForm="ngForm">
       <div class="grid-container">
         <div>
-          <label for="id">Id:</label>
-          <input type=string id="id" name="id" formControlName="id">
+          <label for="id">ID:</label>
+          <input type=string id="id" name="id" formControlName="id" (keydown.Tab)="onTabPressed($event)">
           <div *ngIf="form.controls['id'].invalid && (form.controls['id'].dirty || form.controls['id'].touched)"
             class="error-container">
-            <div *ngIf="form.controls['id'].errors!['required']" class="error-message">Id requerido</div>
+            <div *ngIf="form.controls['id'].errors!['required']" class="error-message">ID requerido</div>
             <div *ngIf="form.controls['id'].errors!['minlength']" class="error-message">min. 3 caracteres</div>
             <div *ngIf="form.controls['id'].errors!['maxlength']" class="error-message">max. 10 caracteres</div>
           </div>
         </div>
         <div>
           <label for="name">Nombre:</label>
-          <input type=string id="id" name="name" formControlName="name">
+          <input type=string id="id" name="name" formControlName="name" (keydown.Tab)="onTabPressed($event)">
           <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)"
             class="error-container">
             <div *ngIf="form.controls['name'].errors!['required']" class="error-message">Nombre requerido</div>
@@ -24,7 +26,7 @@
         </div>
         <div>
           <label for="description">Descripción:</label>
-          <input type=string id="description" name="description" formControlName="description">
+          <input type=string id="description" name="description" formControlName="description" (keydown.Tab)="onTabPressed($event)">
           <div
             *ngIf="form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)"
             class="error-container">
@@ -38,7 +40,7 @@
         </div>
         <div>
           <label for="logo">Logo:</label>
-          <input type=string id="logo" name="logo" formControlName="logo">
+          <input type=string id="logo" name="logo" formControlName="logo" (keydown.Tab)="onTabPressed($event)">
           <div *ngIf="form.controls['logo'].invalid && (form.controls['logo'].dirty || form.controls['logo'].touched)"
             class="error-container">
             <div *ngIf="form.controls['logo'].errors!['required']" class="error-message">Logo requerido</div>
@@ -47,7 +49,7 @@
         <div>
           <label for="releaseDate">Fecha de liberación:</label>
           <input type=text id="releaseDate" name="releaseDate" formControlName="releaseDate" maxlength="10"
-            minlength="10" dateFormat="^\d{2}-\d{2}-\d{4}$">
+            minlength="10" dateFormat="^\d{2}-\d{2}-\d{4}$" (keydown.Tab)="onTabPressed($event)">
           <div
             *ngIf="form.controls['releaseDate'].invalid && (form.controls['releaseDate'].dirty || form.controls['releaseDate'].touched)"
             class="error-container">
@@ -57,13 +59,13 @@
         </div>
         <div>
           <label for="restructureDate">Fecha de restructuración:</label>
-          <input type=string id="restructureDate" name="restructureDate" readonly formControlName="restructureDate">
+          <input type=string id="restructureDate" name="restructureDate" readonly formControlName="restructureDate" (keydown.Tab)="onTabPressed($event)">
         </div>
         <div>
-          <button type="submit" [disabled]="productForm.invalid">Agregar producto</button>
+          <button type="submit" [disabled]="productForm.invalid" class="add-product-button">Agregar</button>
         </div>
         <div>
-          <button type="submit" [disabled]="productForm.invalid">Reiniciar formulario</button>
+          <button type="submit" [disabled]="productForm.invalid" class="restart-form-button">Reiniciar</button>
         </div>
       </div>
     </form>
