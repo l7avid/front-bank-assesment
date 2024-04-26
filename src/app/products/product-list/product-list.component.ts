@@ -65,6 +65,12 @@ export class ProductListComponent implements OnChanges, OnInit, OnDestroy {
     this.router.navigate(['/form']);
   }
 
+  onSearch(value: string): void {
+    this.filteredProducts = this.products.filter(product => 
+      product.name.toLowerCase().includes(value.toLocaleLowerCase())
+    );
+  }
+
   ngOnDestroy() {
     this.productListSubscription.unsubscribe();
   }

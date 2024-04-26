@@ -24,12 +24,6 @@ export class AppComponent implements OnInit{
     this.products = this.productService.getProducts();
   }
 
-  onSearch(value: string): void {
-    this.filteredProducts = this.products.filter(product => 
-      product.name.toLowerCase().includes(value.toLocaleLowerCase())
-    );
-  }
-
   onQuantitySelected(quantity: number): void {
     this.selectedQuantity = quantity;
   }

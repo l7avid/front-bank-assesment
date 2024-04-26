@@ -1,3 +1,7 @@
+<div class="open-form-button">
+  <app-search (searchChange)="onSearch($event)" class="app-search"></app-search>
+  <button (click)="navigateToForm()">Agregar</button>
+</div>
 <div class="products-table-container">
   <div class="products-table-scroll">
     <table aria-label='Products' class="products-table">
@@ -22,12 +26,7 @@
     </table>
   </div>
 </div>
-<div>
+<div class="footer-products-table">
   <h4>{{productList.length}} {{productList.length === 1 ? 'resultado' : 'resultados'}}</h4>
-</div>
-<div>
-  <app-product-result-select (quantitySelected)="onQuantitySelected($event)"></app-product-result-select>
-</div>
-<div>
-  <button (click)="navigateToForm()">Agregar</button>
+  <app-product-result-select class="product-result-select" (quantitySelected)="onQuantitySelected($event)"></app-product-result-select>
 </div>

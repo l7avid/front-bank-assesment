@@ -50,6 +50,23 @@
   margin: 0 auto;
 }
 
-h4 {
+h4, button{
   font-family: 'Roboto', sans-serif;
+}
+
+.footer-products-table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-result-select {
+  margin-left: auto;
+}
+
+.open-form-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
 }
