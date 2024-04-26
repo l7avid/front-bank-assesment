@@ -108,12 +108,10 @@ export class AddProductFormComponent implements OnInit {
   }
 
   resetForm() {
-    // Reset the form to its initial state
     this.form.reset();
   }
 
   closeForm() {
-    this.productService.refreshProductList();
     this.router.navigateByUrl('');
   }
 }

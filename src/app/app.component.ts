@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './models/product';
 import { ProductService } from './services/product-service/product.service';
 
@@ -11,16 +11,19 @@ export class AppComponent implements OnInit{
 
   title = 'tech-challenge';
   products: Product[] = [];
+  filteredProducts: Product[] = [];
   selectedQuantity: number = 5;
 
   constructor(private productService: ProductService) {}
-
-  @Output() searchChange = new EventEmitter<string>();
   
-  filteredProducts: Product[] = [];
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+    this.productService.products$.subscribe(products => {
+      this.products = products;
+    });
+    this.productService.productsFiltered$.subscribe(filteredProducts => {
+      this.filteredProducts = filteredProducts;
+    })
   }
 
   onQuantitySelected(quantity: number): void {

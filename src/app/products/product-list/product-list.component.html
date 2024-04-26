@@ -1,5 +1,5 @@
 <div class="open-form-button">
-  <app-search (searchChange)="onSearch($event)" class="app-search"></app-search>
+  <app-search class="app-search"></app-search>
   <button (click)="navigateToForm()">Agregar</button>
 </div>
 <div class="products-table-container">
@@ -14,8 +14,8 @@
           <th class="products-table-header">Fecha de restruturación</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let product of productList">
+      <tbody *ngIf="filteredProducts?.length; else allProducts">
+        <tr *ngFor="let product of filteredProducts.slice(0, selectedQuantity)">
           <td class="products-table-cell"><img class="products-table-logo" [src]="product.logo" alt="Product logo"></td>
           <td class="products-table-cell">{{product.name}}</td>
           <td class="products-table-cell">{{product.description}}</td>
@@ -23,10 +23,24 @@
           <td class="products-table-cell">{{product.restructureDate | date:'MM-dd-yyyy' }}</td>
         </tr>
       </tbody>
+      <ng-template #allProducts>
+        <tbody>
+          <tr *ngFor="let product of products.slice(0, selectedQuantity)">
+            <td class="products-table-cell"><img class="products-table-logo" [src]="product.logo" alt="Product logo">
+            </td>
+            <td class="products-table-cell">{{product.name}}</td>
+            <td class="products-table-cell">{{product.description}}</td>
+            <td class="products-table-cell">{{product.releaseDate | date:'MM-dd-yyyy'}}</td>
+            <td class="products-table-cell">{{product.restructureDate | date:'MM-dd-yyyy' }}</td>
+          </tr>
+        </tbody>
+        </ng-template>
     </table>
   </div>
 </div>
 <div class="footer-products-table">
-  <h4>{{productList.length}} {{productList.length === 1 ? 'resultado' : 'resultados'}}</h4>
-  <app-product-result-select class="product-result-select" (quantitySelected)="onQuantitySelected($event)"></app-product-result-select>
+  <h4 *ngIf="filteredProducts?.length">{{filteredProducts!.length}} {{filteredProducts!.length === 1 ? 'resultado' : 'resultados'}}</h4>
+  <h4 *ngIf="!filteredProducts?.length">{{products.length}} {{products.length === 1 ? 'resultado' : 'resultados'}}</h4>
+  <app-product-result-select class="product-result-select"
+    (quantitySelected)="onQuantitySelected($event)"></app-product-result-select>
 </div>

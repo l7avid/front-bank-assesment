@@ -27,8 +27,12 @@ export class ProductService {
     generateProduct("114", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones")
   ]
 
-  private productListSubject = new BehaviorSubject<Product[]>(this.products);
-  productList$ = this.productListSubject.asObservable();
+  filteredProducts: Product[] = []
+
+  private productsSubject = new BehaviorSubject<Product[]>(this.products);
+  private productsFilteredSubject = new BehaviorSubject<Product[]>(this.filteredProducts);
+  products$ = this.productsSubject.asObservable();
+  productsFiltered$ = this.productsFilteredSubject.asObservable();
 
   getProducts(): Product[] {
     return this.products;
@@ -36,14 +40,22 @@ export class ProductService {
 
   addProduct(product: Product) {
     this.products.push(product);
-    this.refreshProductList();
+    this.productsSubject.next([...this.products]);
+  }
+
+  filterProduct(productName: string) {
+    if(productName.trim() === '') {
+      this.filteredProducts = [];
+    } else {
+      this.filteredProducts = this.products.filter(product => {
+        return product.name.toLowerCase().includes(productName.toLowerCase());
+      });
+    }
+    this.productsFilteredSubject.next([...this.filteredProducts])
   }
 
   isAnExistingId(id: string): boolean {
     return this.products.some(product => product.id === id);
   }
 
-  refreshProductList() {
-    this.productListSubject.next(this.products);
-  }
 }

@@ -4,7 +4,7 @@ export function dateFormatValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value: string = control.value;
     const dateFormatRegex =
-      /^(0[1-9]|1[1-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])-\d{4}$/;
+      /^(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])-\d{4}$/;
     if (value && !dateFormatRegex.test(value)) {
       return { invalidDateFormat: true };
     }
