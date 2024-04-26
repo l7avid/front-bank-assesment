@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
-import { MyDatePipe } from './pipes/myDate.pipe';
 import { DatePipe } from '@angular/common';
 import { SearchComponent } from './search/search/search.component';
 import { ProductResultSelectComponent } from './products/product-result-select/product-result-select.component';
@@ -16,17 +15,16 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [
     AppComponent,
     ProductListComponent,
-    MyDatePipe,
     ProductResultSelectComponent,
     AddButtonComponent,
-    AddProductFormComponent
+    AddProductFormComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
-    SearchComponent,
     FormsModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     DatePipe
