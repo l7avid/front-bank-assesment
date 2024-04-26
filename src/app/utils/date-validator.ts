@@ -15,7 +15,6 @@ export function dateFormatValidator(): ValidatorFn {
 export function futureDateValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (!control.value) {
-      // If the control value is empty, return null (no validation error)
       return null;
     }
 
@@ -23,11 +22,9 @@ export function futureDateValidator(): ValidatorFn {
     const today = new Date();
 
     if (selectedDate < today) {
-      // If the selected date is in the past, return a validation error
       return { 'futureDate': true };
     }
 
-    // If the selected date is today or in the future, return null (no validation error)
     return null;
   }
 }

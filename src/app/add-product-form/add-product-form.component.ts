@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/product';
 import { generateDateOneYearFurther } from '../utils/restructure-date-generator';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateFormatValidator, futureDateValidator } from '../utils/date-validator';
 import { DatePipe } from '@angular/common';
 import { filter } from 'rxjs';
+import { ProductService } from '../services/product-service/product.service';
 
 @Component({
   selector: 'app-add-product-form',
@@ -15,7 +16,7 @@ export class AddProductFormComponent implements OnInit {
   product!: Product;
   form!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe) {}
+  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private productService: ProductService) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -23,6 +24,7 @@ export class AddProductFormComponent implements OnInit {
         '',
         [
           Validators.required,
+          this.validateId.bind(this),
           Validators.minLength(3),
           Validators.maxLength(10),
         ],
@@ -74,12 +76,21 @@ export class AddProductFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Adding product');
+    const product: Product = this.form.value;
+    this.productService.addProduct(product);
   }
 
   onTabPressed(event: Event) {
     if ((event as KeyboardEvent).key === 'Tab') {
       event.preventDefault();
     }
+  }
+
+  validateId(control: AbstractControl) {
+    const id = control.value;
+    if (this.productService.isAnExistingId(id)) {
+      return { idExists: true };
+    }
+    return null;
   }
 }
