@@ -2,29 +2,41 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
+  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product';
+import { ProductService } from 'src/app/services/product-service/product.service';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
-export class ProductListComponent implements OnChanges {
+export class ProductListComponent implements OnChanges, OnInit, OnDestroy {
   @Input() filteredProducts?: Product[];
   @Input() products!: Product[];
   @Input() selectedQuantity!: number;
 
   displayedProducts: Product[] = [];
+  private productListSubscription!: Subscription;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private productService: ProductService) {}
 
   get productList(): Product[] {
     return this.filteredProducts && this.filteredProducts.length > 0
       ? this.filteredProducts.slice(0, this.selectedQuantity)
       : this.products.slice(0, this.selectedQuantity);
+  }
+
+  ngOnInit() {
+    // Subscribe to changes in the product list
+    this.productListSubscription = this.productService.productList$.subscribe(products => {
+      this.products = products;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,5 +63,9 @@ export class ProductListComponent implements OnChanges {
 
   navigateToForm(): void {
     this.router.navigate(['/form']);
+  }
+
+  ngOnDestroy() {
+    this.productListSubscription.unsubscribe();
   }
 }

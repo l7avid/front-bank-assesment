@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { generateProduct } from 'src/app/utils/product-generator';
 import { v4 as uuid } from 'uuid'
@@ -23,15 +24,11 @@ export class ProductService {
     generateProduct("111", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
     generateProduct("112", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
     generateProduct("113", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("114", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("115", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("116", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("117", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("118", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("119", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("120", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones"),
-    generateProduct("121", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones")
+    generateProduct("114", "../../../assets/images/life-insurance.png", "Seguros", "Agiliza la gestión de tu dinero y el de tu negocio con los diferentes servicios para tus transacciones")
   ]
+
+  private productListSubject = new BehaviorSubject<Product[]>(this.products);
+  productList$ = this.productListSubject.asObservable();
 
   getProducts(): Product[] {
     return this.products;
@@ -39,9 +36,14 @@ export class ProductService {
 
   addProduct(product: Product) {
     this.products.push(product);
+    this.refreshProductList();
   }
 
   isAnExistingId(id: string): boolean {
     return this.products.some(product => product.id === id);
+  }
+
+  refreshProductList() {
+    this.productListSubject.next(this.products);
   }
 }

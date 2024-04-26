@@ -1,5 +1,6 @@
 <div class="overlay">
   <div class="form-container">
+    <span class="close-button" (click)="closeForm()">&times;</span>
     <h2 class="form-title">Formulario de Registro</h2>
     <hr>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #productForm="ngForm">
@@ -67,7 +68,7 @@
           <button type="submit" [disabled]="productForm.invalid" class="add-product-button">Agregar</button>
         </div>
         <div>
-          <button type="submit" [disabled]="productForm.invalid" class="restart-form-button">Reiniciar</button>
+          <button type="submit" [disabled]="!productForm.dirty && !productForm.touched" class="restart-form-button" (click)="resetForm()">Reiniciar</button>
         </div>
       </div>
     </form>

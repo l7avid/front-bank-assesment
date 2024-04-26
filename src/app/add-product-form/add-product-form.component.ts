@@ -1,11 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../models/product';
 import { generateDateOneYearFurther } from '../utils/restructure-date-generator';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { dateFormatValidator, futureDateValidator } from '../utils/date-validator';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import {
+  dateFormatValidator,
+  futureDateValidator,
+} from '../utils/date-validator';
 import { DatePipe } from '@angular/common';
 import { filter } from 'rxjs';
 import { ProductService } from '../services/product-service/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product-form',
@@ -16,7 +25,12 @@ export class AddProductFormComponent implements OnInit {
   product!: Product;
   form!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private productService: ProductService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
+    private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -53,8 +67,7 @@ export class AddProductFormComponent implements OnInit {
           Validators.minLength(10),
           Validators.maxLength(10),
           dateFormatValidator(),
-          futureDateValidator()
-
+          futureDateValidator(),
         ],
       ],
       restructureDate: [''],
@@ -92,5 +105,15 @@ export class AddProductFormComponent implements OnInit {
       return { idExists: true };
     }
     return null;
+  }
+
+  resetForm() {
+    // Reset the form to its initial state
+    this.form.reset();
+  }
+
+  closeForm() {
+    this.productService.refreshProductList();
+    this.router.navigateByUrl('');
   }
 }
