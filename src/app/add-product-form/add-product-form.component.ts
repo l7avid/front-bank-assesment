@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Product } from '../models/product';
 import { generateDateOneYearFurther } from '../utils/restructure-date-generator';
 import {
@@ -22,6 +22,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./add-product-form.component.css'],
 })
 export class AddProductFormComponent implements OnInit {
+
+  @Output() editingCompleted = new EventEmitter<void>();
 
   form!: FormGroup;
   isEditMode: boolean = false;
@@ -111,6 +113,8 @@ export class AddProductFormComponent implements OnInit {
     } else {
       this.productService.addProduct(product);
     }
+
+    this.productService.emitEditingCompleted();
   }
 
   onTabPressed(event: Event) {

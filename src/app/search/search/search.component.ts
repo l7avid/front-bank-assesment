@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { ProductService } from 'src/app/services/product-service/product.service';
 
 @Component({
@@ -15,8 +16,14 @@ export class SearchComponent {
   onSearch(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const value = inputElement.value;
-    this.productService.filterProduct(value);
-    this.searchChange.emit(value);
+    this.productService.filterProduct(value).pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(filteredProducts => {
+        this.searchChange.emit(value);
+        return filteredProducts;
+      })
+    ).subscribe();
   }
 
 }

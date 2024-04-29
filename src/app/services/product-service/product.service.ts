@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, of } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { generateProduct } from 'src/app/utils/product-generator';
 import { v4 as uuid } from 'uuid'
@@ -29,45 +29,56 @@ export class ProductService {
 
   filteredProducts: Product[] = []
 
+  private editingCompletedSubject = new Subject<void>();
   private productsSubject = new BehaviorSubject<Product[]>(this.products);
   private productsFilteredSubject = new BehaviorSubject<Product[]>(this.filteredProducts);
+
+  editingCompleted$: Observable<void> = this.editingCompletedSubject.asObservable();
   products$ = this.productsSubject.asObservable();
   productsFiltered$ = this.productsFilteredSubject.asObservable();
 
-  getProducts(): Product[] {
-    return this.products;
+  getProducts(): Observable<Product[]> {
+    return this.products$;
   }
 
-  getProductById(productId: string) {
-    return this.products.find(product => product.id === productId);
+  emitEditingCompleted(): void {
+    this.editingCompletedSubject.next();
+  }
+  
+  getProductById(productId: string): Observable<Product | undefined> {
+    return this.products$.pipe(
+      map(products => products.find(product => product.id === productId))
+    );
   }
 
-  addProduct(product: Product) {
+  addProduct(product: Product): void {
     this.products.push(product);
     this.productsSubject.next([...this.products]);
   }
 
-  updateProduct(incomingProduct: Product) {
+  updateProduct(incomingProduct: Product): void {
     const index = this.products.findIndex(product => product.id === incomingProduct.id);
     if (index !== -1) {
-      // Update the existing product with the new values
       this.products[index] = { ...this.products[index], ...incomingProduct };
+      this.productsSubject.next([...this.products]);
     }
   }
 
-  filterProduct(productName: string) {
-    if(productName.trim() === '') {
-      this.filteredProducts = [];
+  filterProduct(productName: string): Observable<Product[]> {
+    if (productName.trim() === '') {
+      return of([]);
     } else {
-      this.filteredProducts = this.products.filter(product => {
-        return product.name.toLowerCase().includes(productName.toLowerCase());
-      });
+      const filteredProducts = this.products.filter(product =>
+        product.name.toLowerCase().includes(productName.toLowerCase())
+      );
+      return of(filteredProducts);
     }
-    this.productsFilteredSubject.next([...this.filteredProducts])
   }
 
-  isAnExistingId(id: string): boolean {
-    return this.products.some(product => product.id === id);
+  isAnExistingId(id: string): Observable<boolean> {
+    return this.products$.pipe(
+      map(products => products.some(product => product.id === id))
+    );
   }
 
 }

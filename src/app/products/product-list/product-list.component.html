@@ -1,5 +1,5 @@
 <div class="open-form-button">
-  <app-search class="app-search"></app-search>
+  <app-search class="app-search" (searchChange)="onSearchInputChange($event)"></app-search>
   <button (click)="navigateToForm()">Agregar</button>
 </div>
 <div class="products-table-container">
