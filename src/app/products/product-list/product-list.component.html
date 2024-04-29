@@ -12,6 +12,7 @@
           <th class="products-table-header">Descripción</th>
           <th class="products-table-header">Fecha de liberación</th>
           <th class="products-table-header">Fecha de restruturación</th>
+          <th class="products-table-header"></th>
         </tr>
       </thead>
       <tbody *ngIf="filteredProducts?.length; else allProducts">
@@ -21,17 +22,18 @@
           <td class="products-table-cell">{{product.description}}</td>
           <td class="products-table-cell">{{product.releaseDate | date:'MM-dd-yyyy'}}</td>
           <td class="products-table-cell">{{product.restructureDate | date:'MM-dd-yyyy' }}</td>
+          <td class="products-table-cell"><app-dropdown #selectedOption [options]="options" (selectionChange)="navigateToEdit(selectedOption.value, product.id)"></app-dropdown></td>
         </tr>
       </tbody>
       <ng-template #allProducts>
         <tbody>
           <tr *ngFor="let product of products.slice(0, selectedQuantity)">
-            <td class="products-table-cell"><img class="products-table-logo" [src]="product.logo" alt="Product logo">
-            </td>
+            <td class="products-table-cell"><img class="products-table-logo" [src]="product.logo" alt="Product logo"></td>
             <td class="products-table-cell">{{product.name}}</td>
             <td class="products-table-cell">{{product.description}}</td>
             <td class="products-table-cell">{{product.releaseDate | date:'MM-dd-yyyy'}}</td>
             <td class="products-table-cell">{{product.restructureDate | date:'MM-dd-yyyy' }}</td>
+            <td class="products-table-cell"><app-dropdown #selectedOption [options]="options" (selectionChange)="navigateToEdit(selectedOption.value, product.id)"></app-dropdown></td>
           </tr>
         </tbody>
         </ng-template>

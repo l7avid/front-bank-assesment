@@ -7,7 +7,7 @@
       <div class="grid-container">
         <div>
           <label for="id">ID:</label>
-          <input type=string id="id" name="id" formControlName="id" (keydown.Tab)="onTabPressed($event)">
+          <input type=string id="id" name="id" formControlName="id" (keydown.Tab)="onTabPressed($event)" [readonly]="isEditMode">
           <div *ngIf="form.controls['id'].invalid && (form.controls['id'].dirty || form.controls['id'].touched)"
             class="error-container">
             <div *ngIf="form.controls['id'].errors!['required']" class="error-message">ID requerido</div>
@@ -65,7 +65,7 @@
           <input type=string id="restructureDate" name="restructureDate" readonly formControlName="restructureDate" (keydown.Tab)="onTabPressed($event)">
         </div>
         <div>
-          <button type="submit" [disabled]="productForm.invalid" class="add-product-button">Agregar</button>
+          <button type="submit" [disabled]="productForm.invalid" class="add-product-button">{{isEditMode ? 'Editar' : 'Agregar' }}</button>
         </div>
         <div>
           <button type="submit" [disabled]="!productForm.dirty && !productForm.touched" class="restart-form-button" (click)="resetForm()">Reiniciar</button>

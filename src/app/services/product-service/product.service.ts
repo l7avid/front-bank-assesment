@@ -38,9 +38,21 @@ export class ProductService {
     return this.products;
   }
 
+  getProductById(productId: string) {
+    return this.products.find(product => product.id === productId);
+  }
+
   addProduct(product: Product) {
     this.products.push(product);
     this.productsSubject.next([...this.products]);
+  }
+
+  updateProduct(incomingProduct: Product) {
+    const index = this.products.findIndex(product => product.id === incomingProduct.id);
+    if (index !== -1) {
+      // Update the existing product with the new values
+      this.products[index] = { ...this.products[index], ...incomingProduct };
+    }
   }
 
   filterProduct(productName: string) {

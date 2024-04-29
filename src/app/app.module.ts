@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddButtonComponent } from './shared/components/add-button/add-button.component';
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DropdownComponent } from './shared/components/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
     ProductResultSelectComponent,
     AddButtonComponent,
     AddProductFormComponent,
-    SearchComponent
+    SearchComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,7 @@ import {
 import { DatePipe } from '@angular/common';
 import { filter } from 'rxjs';
 import { ProductService } from '../services/product-service/product.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product-form',
@@ -22,14 +22,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-product-form.component.css'],
 })
 export class AddProductFormComponent implements OnInit {
-  product!: Product;
+
   form!: FormGroup;
+  isEditMode: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private datePipe: DatePipe,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -75,7 +77,7 @@ export class AddProductFormComponent implements OnInit {
 
     this.form
       .get('releaseDate')
-      ?.valueChanges.pipe(filter((value: string) => value.length === 10))
+      ?.valueChanges.pipe(filter((value: string) => value?.length === 10))
       .subscribe((newReleaseDate) => {
         const newRestructureDate = generateDateOneYearFurther(
           new Date(newReleaseDate)
@@ -86,11 +88,29 @@ export class AddProductFormComponent implements OnInit {
         );
         this.form.get('restructureDate')!.setValue(finalRestructureDate);
       });
+
+      this.route.queryParams.subscribe(params => {
+        const updatedParams = { ...params };
+        updatedParams['releaseDate'] = this.datePipe.transform(params['releaseDate'], 'MM-dd-yyyy');
+        updatedParams['restructureDate'] = this.datePipe.transform(params['restructureDate'], 'MM-dd-yyyy');
+        this.isEditMode = Object.keys(params).length > 0;
+        const idControl = this.form.get('id');
+        idControl?.setValidators([
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(10),
+        ])
+        this.form.patchValue(updatedParams);
+      });
   }
 
   onSubmit(): void {
     const product: Product = this.form.value;
-    this.productService.addProduct(product);
+    if(this.isEditMode) {
+      this.productService.updateProduct(product);
+    } else {
+      this.productService.addProduct(product);
+    }
   }
 
   onTabPressed(event: Event) {
