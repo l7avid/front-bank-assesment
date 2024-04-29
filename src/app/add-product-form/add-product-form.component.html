@@ -68,7 +68,7 @@
           <button type="submit" [disabled]="productForm.invalid" class="add-product-button">{{isEditMode ? 'Editar' : 'Agregar' }}</button>
         </div>
         <div>
-          <button type="submit" [disabled]="!productForm.dirty && !productForm.touched" class="restart-form-button" (click)="resetForm()">Reiniciar</button>
+          <button type="submit" [disabled]="!isEditMode && !productForm.dirty && !productForm.touched" class="restart-form-button" (click)="resetForm()">Reiniciar</button>
         </div>
       </div>
     </form>

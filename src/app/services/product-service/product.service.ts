@@ -56,6 +56,13 @@ export class ProductService {
     this.productsSubject.next([...this.products]);
   }
 
+  deleteProduct(productId: string): void {
+    const index = this.products.findIndex(product => product.id === productId);
+    if (index !== -1) {
+      this.products.splice(index, 1);
+    }
+  }
+
   updateProduct(incomingProduct: Product): void {
     const index = this.products.findIndex(product => product.id === incomingProduct.id);
     if (index !== -1) {

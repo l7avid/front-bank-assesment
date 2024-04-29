@@ -1,0 +1,14 @@
+<div class="overlay">
+  <div class="container">
+    <span class="close-button" (click)="closeModal()">&times;</span>
+    <p>¿Está seguro que desea eliminar el producto {{product!.name}}?</p>
+    <div class="grid-container">
+      <div>
+        <button (click)="deleteProduct()" class="delete-button">Confirmar</button>
+      </div>
+      <div>
+        <button class="cancel-button" (click)="closeModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

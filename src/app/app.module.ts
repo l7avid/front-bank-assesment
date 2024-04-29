@@ -11,6 +11,7 @@ import { AddButtonComponent } from './shared/components/add-button/add-button.co
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DropdownComponent } from './shared/components/dropdown/dropdown.component';
+import { ModalDeleteComponent } from './shared/components/modal-delete/modal-delete.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DropdownComponent } from './shared/components/dropdown/dropdown.compone
     AddButtonComponent,
     AddProductFormComponent,
     SearchComponent,
-    DropdownComponent
+    DropdownComponent,
+    ModalDeleteComponent
   ],
   imports: [
     BrowserModule,

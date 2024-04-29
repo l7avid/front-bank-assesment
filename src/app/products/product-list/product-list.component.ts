@@ -23,14 +23,12 @@ export class ProductListComponent implements OnInit{
   options: string[] = ['','Edit', 'Delete'];
   searchQuery: string = '';
 
-  private editingCompletedSubscription!: Subscription;
-
   constructor(private router: Router, private productService: ProductService) {}
   
   ngOnInit(): void {
     this.getFilteredProducts();
-    this.editingCompletedSubscription = this.productService.editingCompleted$.subscribe(() => {
-      this.getFilteredProducts(); // Refresh the product list after editing is completed
+    this.productService.editingCompleted$.subscribe(() => {
+      this.getFilteredProducts();
     });
   }
 
@@ -56,10 +54,10 @@ export class ProductListComponent implements OnInit{
   navigateToEdit(selectedOption: string, productId: string): void {
     this.productService.getProductById(productId).subscribe(product => {
       if(selectedOption.toLocaleLowerCase() === "edit" && product) {
-        this.router.navigate(['/edit'], {queryParams: product});
+        this.router.navigate(['/edit', product.id], {queryParams: product});
       }
       if(selectedOption.toLocaleLowerCase() === "delete") {
-        this.router.navigate(['/delete'])
+        this.router.navigate(['/delete', product?.id])
       }
     });
   }

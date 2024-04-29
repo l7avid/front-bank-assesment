@@ -22,7 +22,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./add-product-form.component.css'],
 })
 export class AddProductFormComponent implements OnInit {
-
   @Output() editingCompleted = new EventEmitter<void>();
 
   form!: FormGroup;
@@ -91,24 +90,47 @@ export class AddProductFormComponent implements OnInit {
         this.form.get('restructureDate')!.setValue(finalRestructureDate);
       });
 
-      this.route.queryParams.subscribe(params => {
-        const updatedParams = { ...params };
-        updatedParams['releaseDate'] = this.datePipe.transform(params['releaseDate'], 'MM-dd-yyyy');
-        updatedParams['restructureDate'] = this.datePipe.transform(params['restructureDate'], 'MM-dd-yyyy');
-        this.isEditMode = Object.keys(params).length > 0;
-        const idControl = this.form.get('id');
-        idControl?.setValidators([
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(10),
-        ])
-        this.form.patchValue(updatedParams);
-      });
+    this.route.params.subscribe((params) => {
+      const productId = params['id'];
+      if (productId) {
+        this.productService.getProductById(productId).subscribe((product) => {
+          if (product) {
+            const idControl = this.form.get('id');
+            idControl?.setValidators([
+              Validators.required,
+              Validators.minLength(3),
+              Validators.maxLength(10),
+            ]);
+            this.form.patchValue({
+              id: product.id,
+              logo: product.logo,
+              name: product.name,
+              description: product.description,
+              releaseDate: this.formatDate(product.releaseDate),
+              restructureDate: this.formatDate(product.restructureDate),
+            });
+          }
+        });
+      }
+    });
+
+    this.route.url.subscribe((urlSegments) => {
+      this.isEditMode = urlSegments.some(
+        (segment) => segment.path.toLowerCase() === 'edit'
+      );
+    });
+  }
+
+  formatDate(date: Date | undefined): string {
+    if (!date) {
+      return '';
+    }
+    return this.datePipe.transform(date, 'MM-dd-yyyy') || '';
   }
 
   onSubmit(): void {
     const product: Product = this.form.value;
-    if(this.isEditMode) {
+    if (this.isEditMode) {
       this.productService.updateProduct(product);
     } else {
       this.productService.addProduct(product);
