@@ -1,50 +1,53 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { ProductService } from './services/product-service/product.service';
 import { Product } from './models/product';
 
 describe('AppComponent', () => {
   let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>
-
-  let productService: jasmine.SpyObj<ProductService>;
+  let fixture: ComponentFixture<AppComponent>;
+  let productServiceSpy: jasmine.SpyObj<ProductService>;
 
   beforeEach(async () => {
     // Create a spy object for the ProductService
-    const productServiceSpy = jasmine.createSpyObj('ProductService', ['getProducts']);
+    productServiceSpy = jasmine.createSpyObj('ProductService', ['getProducts$', 'getFilteredProducts$']);
 
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      providers: [{ provide: ProductService, useValue: productServiceSpy }]
+      providers: [{ provide: ProductService, useValue: productServiceSpy }],
     }).compileComponents();
+  });
 
-    // Initialize the component and fixture
+  beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    productService = TestBed.inject(ProductService) as jasmine.SpyObj<ProductService>;
   });
 
   it('should create the app', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize products on ngOnInit', () => {
-    const mockProducts: Product[] = [
-      { id: "1", logo: "awesome-logo1.png", name: 'Product 1', description: "Description 1", releaseDate: new Date(), restructureDate: new Date() 
-      }, 
-      { id: "2", logo: "awesome-logo2.png", name: 'Product 2', description: "Description 2", releaseDate: new Date(), restructureDate: new Date() 
-      }];
-    productService.getProducts.and.returnValue(mockProducts);
-
-    fixture.detectChanges(); // Trigger ngOnInit
-
+  it('should initialize products and filteredProducts on ngOnInit', () => {
+    const mockProducts: Product[] = [];
+    const mockFilteredProducts: Product[] = [];
+  
+    // Stub the products$ and filteredProducts$ observables directly
+    productServiceSpy.products$ = of(mockProducts);
+    productServiceSpy.productsFiltered$ = of(mockFilteredProducts);
+  
+    // Trigger ngOnInit
+    component.ngOnInit();
+  
+    // Check that products and filteredProducts are initialized correctly (empty arrays)
     expect(component.products).toEqual(mockProducts);
+    expect(component.filteredProducts).toEqual(mockFilteredProducts);
   });
+  
 
   it('should update selectedQuantity on onQuantitySelected', () => {
     const quantity = 10;
     component.onQuantitySelected(quantity);
     expect(component.selectedQuantity).toEqual(quantity);
   });
-
-})
+});

@@ -1,5 +1,3 @@
-// File: add-product-form.component.spec.ts
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddProductFormComponent } from './add-product-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,7 +14,7 @@ describe('AddProductFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AddProductFormComponent],
       imports: [ReactiveFormsModule, RouterTestingModule],
-      providers: [DatePipe, ProductService], // Add necessary providers
+      providers: [DatePipe, ProductService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddProductFormComponent);
@@ -77,8 +75,6 @@ describe('AddProductFormComponent', () => {
       restructureDate: new Date('01-01-2024'),
     });
   });
-
-  // Add more test cases as needed
 
   it('should reset the form', () => {
     component.form.setValue({

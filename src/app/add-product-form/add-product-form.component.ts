@@ -3,8 +3,10 @@ import { Product } from '../models/product';
 import { generateDateOneYearFurther } from '../utils/restructure-date-generator';
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import {
@@ -12,7 +14,7 @@ import {
   futureDateValidator,
 } from '../utils/date-validator';
 import { DatePipe } from '@angular/common';
-import { filter } from 'rxjs';
+import { Observable, catchError, filter, map, of } from 'rxjs';
 import { ProductService } from '../services/product-service/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 

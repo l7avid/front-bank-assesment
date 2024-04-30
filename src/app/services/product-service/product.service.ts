@@ -82,10 +82,8 @@ export class ProductService {
     }
   }
 
-  isAnExistingId(id: string): Observable<boolean> {
-    return this.products$.pipe(
-      map(products => products.some(product => product.id === id))
-    );
+  isAnExistingId(id: string): boolean {
+    return this.products.some(product => product.id === id);
   }
 
 }
